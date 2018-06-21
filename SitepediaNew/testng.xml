@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+ 
+<suite name="Tests" verbose="1" >
+  <parameter name="browser" value="chrome"/>
+  <test name="Tests"   >
+      	 <classes>
+       <class name="test.java.SitepediaTests.AdvOpportunitiesTests">
+     
+  <methods>
+         <include name="advOpportunities_checkDeletePosition"/>
+         </methods> 
+         </class>
+    </classes>
+ </test>
+</suite>
