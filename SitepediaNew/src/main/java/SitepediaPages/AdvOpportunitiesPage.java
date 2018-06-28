@@ -1,11 +1,12 @@
 package main.java.SitepediaPages;
+
 import org.openqa.selenium.*;
 
-public class AdvOpportunitiesPage  {
+public class AdvOpportunitiesPage  extends BasePage {
 	
-	WebDriver driver;
-	Common common;
-	String sitepedia_url = common.propLoad().getProperty("SitepediaURL");
+
+	
+	String sitepedia_url = propLoad().getProperty("SitepediaURL");
 	String newSectionName= "NewSection"+String.valueOf(Math.round(Math.random()*1000));
 	String newPositionName="NewPosition"+String.valueOf(Math.round(Math.random()*1000));
 	
@@ -33,55 +34,67 @@ public class AdvOpportunitiesPage  {
 	
 	public AdvOpportunitiesPage(WebDriver driver)
 	{
-		this.driver = driver;
-		common = new Common(driver);
+		super(driver);
+		System.out.println("driver in AdvOpportunitiesPage constructor: "+driver);
+		
 	}
+	
 
 	void getSitePage()
 	{
-		driver.get(sitepedia_url+"/#/1?rnd="+String.valueOf(Math.round(Math.random()*10000)));
+		 System.out.println("driver in getSitePage: "+getWebDriver());
+		 getWebDriver().get(sitepedia_url+"/#/1?rnd="+String.valueOf(Math.round(Math.random()*10000)));
 	}
 	
 	
-	void loadSitePage()
+	public void loadSitePage()
 	{
 		getSitePage();
-		driver.navigate().refresh();
-		common.waitingOf(SitePageLoad, "xpath");
+		getWebDriver().navigate().refresh();
+		waitingOf(SitePageLoad, "xpath");
 	}
 	
 	
 	
-	public boolean addSection()
+	public void clickButtonAddSection()
 	{
-		
-		loadSitePage();
-		common.clickElement(buttonAddSection);
-		common.inputTextToField(fieldSectionName, newSectionName);
-		common.clickElement(buttonSaveNewSection);
-		loadSitePage();
-		try {
-		driver.findElement(titleNewSection);
-		}
-		catch (NoSuchElementException e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-		
+		clickElement(buttonAddSection);
 	}
+	
+	public void inputTextToFieldNewSectionName()
+	{
+		inputTextToField(fieldSectionName, newSectionName);
+	}
+	
+	public void clickButtonSaveNewSection()
+	{
+		clickElement(buttonSaveNewSection);
+	}
+	
+	public boolean findNewSection()
+	{
+		try {
+			getWebDriver().findElement(titleNewSection);
+			}
+			catch (NoSuchElementException e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+			
+			return true;
+	}
+
 	
 	public boolean addPosition()
 	{
 		loadSitePage();
-		common.clickElement(buttonAddPosition);
-		common.inputTextToField(fieldPositionName, newPositionName);
-		common.clickElement(buttonSaveNewPosition);
+		clickElement(buttonAddPosition);
+		inputTextToField(fieldPositionName, newPositionName);
+		clickElement(buttonSaveNewPosition);
 		loadSitePage();
 		try {
-			driver.findElement(titleNewPosition);
+			getWebDriver().findElement(titleNewPosition);
 		}
 		catch (NoSuchElementException e)
 		{
@@ -95,11 +108,11 @@ public class AdvOpportunitiesPage  {
 	public boolean deleteSection()
 	{
 		loadSitePage();
-		common.clickElement(buttonDeleteSection);
-		common.clickElement(buttonConfirmDeleteSection);
+		clickElement(buttonDeleteSection);
+		clickElement(buttonConfirmDeleteSection);
 		loadSitePage();
 		try {
-			driver.findElement(titleNewSection);
+			getWebDriver().findElement(titleNewSection);
 			}
 			catch (NoSuchElementException e)
 			{
@@ -113,11 +126,11 @@ public class AdvOpportunitiesPage  {
 	public boolean deletePosition()
 	{
 		loadSitePage();
-		common.clickElement(buttonDeletePosition);
-		common.clickElement(buttonConfirmDeletePosition);
+		clickElement(buttonDeletePosition);
+		clickElement(buttonConfirmDeletePosition);
 		loadSitePage();
 		try {
-			driver.findElement(titleNewPosition);
+			getWebDriver().findElement(titleNewPosition);
 			}
 			catch (NoSuchElementException e)
 			{

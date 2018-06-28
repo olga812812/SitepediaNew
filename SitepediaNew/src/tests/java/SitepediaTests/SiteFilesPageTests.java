@@ -14,42 +14,21 @@ import org.testng.annotations.Test;
 
 
 
-public class SiteFilesPageTests extends Assert {
+public class SiteFilesPageTests extends BaseTest {
 
 	WebDriver driver;
 	String stp_cookie;
-	SiteFilesPage objSFP;
-	Common com = new Common();
-	
+	SiteFilesPage pageFiles;
 
-@Parameters("browser")
-	
-@BeforeClass
-	 
-   public void init(String browser)
-	{
-	 	driver=com.initDriver(browser);
-	    stp_cookie = com.login(driver);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    objSFP = new SiteFilesPage(driver);
-	  	
-	}
-	
-@AfterClass
-	
-	public void close()
-    {
-      driver.quit();
-	 }
-	
+
 	
 	
 	
 	@Test (description="Add link on site's page  - Files")
 	public void addLink()
 	{
-		boolean result= objSFP.addLink();
-		assertTrue(result);
+		boolean result= pageFiles.addLink();
+		Assert.assertTrue(result);
 	}
 	
 

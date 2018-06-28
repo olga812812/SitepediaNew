@@ -4,10 +4,10 @@
   <parameter name="browser" value="chrome"/>
   <test name="Tests"   >
       	 <classes>
-       <class name="test.java.SitepediaTests.AdvOpportunitiesTests">
+       <class name="tests.java.SitepediaTests.AdvOpportunitiesTests">
      
   <methods>
-         <include name="advOpportunities_checkDeletePosition"/>
+         <include name="advOpportunities_checkAddSection"/>
          </methods> 
          </class>
     </classes>

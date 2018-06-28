@@ -1,51 +1,22 @@
 package tests.java.SitepediaTests;
 
-import main.java.SitepediaPages.Common;
+
 import main.java.SitepediaPages.PriceList;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-
-import java.util.concurrent.TimeUnit;
-
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
 
-public class PriceListTest {
+public class PriceListTest extends BaseTest {
 	
 
 	WebDriver driver;
 	String stp_cookie;
 	PriceList objPL;
-	Common com = new Common();
+
 	
 
-@Parameters("browser")
-	
-@BeforeClass
-	 
-   public void init(String browser)
-	{
-	
-        driver=com.initDriver(browser);
-   	   stp_cookie = com.login(driver);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    objPL = new PriceList(driver);
-	  	
-			 }
-@AfterClass
-    public void close()
-     {
-       driver.quit();
-	 }
 
 	
 	@Test (description="Check price list table's titles")
