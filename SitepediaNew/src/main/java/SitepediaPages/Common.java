@@ -28,6 +28,7 @@ public abstract class Common {
 	    pageLogin.setCookies(stp_cookie);
 	    
 	    return stp_cookie;
+	    
 	}
 	
 	public static void ieDriver ()

@@ -22,7 +22,7 @@ public class AdvOpportunitiesTests extends BaseTest {
 	
 
 	
-	@Test (description="Check for addition of section")
+	@Test (description="Check addition of section")
 	public void advOpportunities_checkAddSection()
 	{
 		
@@ -34,26 +34,51 @@ public class AdvOpportunitiesTests extends BaseTest {
 		Assert.assertTrue(pageAO.findNewSection());
 	}
 	
-	/*
-	@Test (description="Check for addition of position")
+	
+	@Test (description="Check addition of position")
 	public void advOpportunities_checkAddPosition()
 	{
-		result=objAO.addPosition();
-		Assert.assertTrue(result);
+		pageAO.loadSitePage();
+		pageAO.clickButtonAddPosition();
+		pageAO.inputTextToFieldNewPositionName();
+		pageAO.clickButtonSaveNewPosition();
+		pageAO.loadSitePage();
+		Assert.assertTrue(pageAO.findNewPosition());
 	}
 	
-	@Test(dependsOnMethods={"advOpportunities_checkAddSection"}, description="Check for deletion of section")
+	@Test (dependsOnMethods={"advOpportunities_checkAddSection"}, description="Check section name editing")
+	public void advOpportunities_checkEditSectionName()
+	{
+		
+		pageAO.loadSitePage();
+		pageAO.clickButtonEditSectionName();
+		sleep(1000);
+		pageAO.inputNewSectionName();
+		pageAO.clickButtonSaveEditedSectionName();
+		pageAO.loadSitePage();
+		Assert.assertTrue(pageAO.findEditedSection());
+	}
+	
+	
+	@Test(dependsOnMethods={"advOpportunities_checkEditSectionName"}, description="Check deletion of section")
 	public void advOpportunities_checkDeleteSection()
 	{
-		result=objAO.deleteSection();
-		Assert.assertTrue(result);
+		pageAO.loadSitePage();
+		pageAO.clickButtonDeleteSection();
+		pageAO.clickButtonConfirmDeleteSection();
+		pageAO.loadSitePage();
+		Assert.assertFalse(pageAO.findNewSection());
 	}
+	
 	
 	@Test(dependsOnMethods={"advOpportunities_checkAddPosition"}, description="Check for deletion of position")
 	public void advOpportunities_checkDeletePosition()
 	{
-		result=objAO.deletePosition();
-		Assert.assertTrue(result);
+		pageAO.loadSitePage();
+		pageAO.clickButtonDeletePosition();
+		pageAO.clickButtonConfirmDeletePosition();
+		pageAO.loadSitePage();
+		Assert.assertFalse(pageAO.findNewPosition());
 	}
-*/
+
 }

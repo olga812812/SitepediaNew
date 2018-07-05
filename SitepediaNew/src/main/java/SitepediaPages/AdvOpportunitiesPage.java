@@ -9,6 +9,7 @@ public class AdvOpportunitiesPage  extends BasePage {
 	String sitepedia_url = propLoad().getProperty("SitepediaURL");
 	String newSectionName= "NewSection"+String.valueOf(Math.round(Math.random()*1000));
 	String newPositionName="NewPosition"+String.valueOf(Math.round(Math.random()*1000));
+	String editedSectionName = newSectionName + "Edited";
 	
 	
 	//Buttons
@@ -20,14 +21,23 @@ public class AdvOpportunitiesPage  extends BasePage {
 	By buttonConfirmDeleteSection= By.xpath("//h3[contains(text(),'Удаление секции')]/following::span[@class='button tiny save' and contains(text(),'Хорошо')]");
 	By buttonDeletePosition = By.xpath("//span[(contains(text(), '"+newPositionName+"'))]/following-sibling::span[@title='Удалить позицию']/i");
 	By buttonConfirmDeletePosition = By.xpath("//h3[contains(text(),'Удаление позиции')]/following::span[@class='button tiny save' and contains(text(),'Хорошо')]");
+	By buttonEditPosition = By.xpath("//span[contains(text(),'"+newPositionName+"')]/preceding-sibling::span[@ng-click='showEditPosition(position,section)']");
+	By buttonEditSectionName = By.xpath("//span[contains(text(),'"+newSectionName+"')]/preceding-sibling::span[@ng-click='showEdit()']");
+	By buttonSaveEditedSectionName = By.xpath("//span[@ng-click='saveEdit()']");
+	
 	
 	//fields
 	By fieldSectionName = By.xpath("//input[@placeholder='Название раздела']");
 	By fieldPositionName = By.xpath("//input[@placeholder='Название позиции']");
+	By fieldEditSectionName=By.xpath("//input[@ng-model='fieldValue']");
+	
+	
 	
 	//labels/titles
 	By titleNewSection = By.xpath("//span[contains(text(),'"+newSectionName+"')]");
 	By titleNewPosition = By.xpath("//span[contains(text(),'"+newPositionName+"')]");
+	By titleEditedSectionName = By.xpath("//span[contains(text(),'"+editedSectionName+"')]");
+	
 	
 	//Events
 	String SitePageLoad = "//span[contains(text(),'Все страницы')]";
@@ -61,20 +71,78 @@ public class AdvOpportunitiesPage  extends BasePage {
 		clickElement(buttonAddSection);
 	}
 	
+	public void clickButtonEditSectionName()
+	{
+		clickElement(buttonEditSectionName);
+	}
+	
+	public void clickButtonAddPosition()
+	{
+		clickElement(buttonAddPosition);
+	}
+	
+	
 	public void inputTextToFieldNewSectionName()
 	{
 		inputTextToField(fieldSectionName, newSectionName);
 	}
+	
+	public void inputNewSectionName()
+	{
+		System.out.println(editedSectionName);
+		inputTextToField(fieldEditSectionName, editedSectionName);
+	}
+	
+	public void inputTextToFieldNewPositionName()
+	{
+		inputTextToField(fieldPositionName, newPositionName);
+	}
+	
 	
 	public void clickButtonSaveNewSection()
 	{
 		clickElement(buttonSaveNewSection);
 	}
 	
-	public boolean findNewSection()
+	public void clickButtonSaveEditedSectionName()
+	{
+		clickElement(buttonSaveEditedSectionName);
+	}
+	
+	
+	public void clickButtonDeleteSection()
+	{
+		clickElement(buttonDeleteSection);
+	}
+	
+	
+	public void clickButtonConfirmDeleteSection()
+	{
+		clickElement(buttonConfirmDeleteSection);
+	}
+	
+	
+	public void clickButtonDeletePosition()
+	{
+		clickElement(buttonDeletePosition);
+	}
+	
+	
+	public void clickButtonConfirmDeletePosition()
+	{
+		clickElement(buttonConfirmDeletePosition);
+	}
+	
+	public void clickButtonSaveNewPosition()
+	{
+		clickElement(buttonSaveNewPosition);
+	}
+	
+	
+	public boolean findSomeElement(By locator)
 	{
 		try {
-			getWebDriver().findElement(titleNewSection);
+			getWebDriver().findElement(locator);
 			}
 			catch (NoSuchElementException e)
 			{
@@ -84,62 +152,28 @@ public class AdvOpportunitiesPage  extends BasePage {
 			
 			return true;
 	}
+	
+	
+	public boolean findNewSection()
+	{
+		return	findSomeElement(titleNewSection);
+	}
+	
+	
+	public boolean findEditedSection()
+	{
+		return	findSomeElement(titleEditedSectionName);
+	}
 
 	
-	public boolean addPosition()
+	public boolean findNewPosition()
 	{
-		loadSitePage();
-		clickElement(buttonAddPosition);
-		inputTextToField(fieldPositionName, newPositionName);
-		clickElement(buttonSaveNewPosition);
-		loadSitePage();
-		try {
-			getWebDriver().findElement(titleNewPosition);
-		}
-		catch (NoSuchElementException e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
+		return	findSomeElement(titleNewPosition);
 	}
 	
-	public boolean deleteSection()
-	{
-		loadSitePage();
-		clickElement(buttonDeleteSection);
-		clickElement(buttonConfirmDeleteSection);
-		loadSitePage();
-		try {
-			getWebDriver().findElement(titleNewSection);
-			}
-			catch (NoSuchElementException e)
-			{
-				e.printStackTrace();
-				return true;
-			}
-			
-			return false;
-	}
+
 	
-	public boolean deletePosition()
-	{
-		loadSitePage();
-		clickElement(buttonDeletePosition);
-		clickElement(buttonConfirmDeletePosition);
-		loadSitePage();
-		try {
-			getWebDriver().findElement(titleNewPosition);
-			}
-			catch (NoSuchElementException e)
-			{
-				e.printStackTrace();
-				return true;
-			}
-			
-			return false;
-	}
+	
 		
 		
 }
