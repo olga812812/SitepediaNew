@@ -52,7 +52,6 @@ public class AdvOpportunitiesTests extends BaseTest {
 		
 		pageAO.loadSitePage();
 		pageAO.clickButtonEditSectionName();
-		sleep(1000);
 		pageAO.inputNewSectionName();
 		pageAO.clickButtonSaveEditedSectionName();
 		pageAO.loadSitePage();
@@ -67,7 +66,7 @@ public class AdvOpportunitiesTests extends BaseTest {
 		pageAO.clickButtonDeleteSection();
 		pageAO.clickButtonConfirmDeleteSection();
 		pageAO.loadSitePage();
-		Assert.assertFalse(pageAO.findNewSection());
+		Assert.assertFalse(pageAO.findEditedSection());
 	}
 	
 	

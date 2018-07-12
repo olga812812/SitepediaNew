@@ -16,9 +16,8 @@ import org.testng.annotations.Test;
 
 public class SiteFilesPageTests extends BaseTest {
 
-	WebDriver driver;
-	String stp_cookie;
-	SiteFilesPage pageFiles;
+	
+	SiteFilesPage page = new SiteFilesPage(driver);
 
 
 	
@@ -27,9 +26,29 @@ public class SiteFilesPageTests extends BaseTest {
 	@Test (description="Add link on site's page  - Files")
 	public void addLink()
 	{
-		boolean result= pageFiles.addLink();
-		Assert.assertTrue(result);
+		page.loadSitePage();
+		page.clickTabFiles();
+		page.clickButtonAddFileOrLink();	
+		page.clickListOfAttachmentType();
+		page.clickLink();
+		page.enterLinkName();
+		page.enterLinkUrl();
+		page.clickButtonSaveLink();
+		Assert.assertTrue(page.findNewLink());
 	}
 	
 
+	@Test (description="Add file on site's page  - Files")
+	public void addFile()
+	{
+		page.loadSitePage();
+		page.clickTabFiles();
+		page.clickButtonAddFileOrLink();	
+		page.clickListOfAttachmentType();
+		page.clickFile();
+		page.enterFileDescription();
+		page.enterFilePath();
+		page.clickButtonSaveFile();
+		Assert.assertTrue(page.findNewFile());
+	}
 }

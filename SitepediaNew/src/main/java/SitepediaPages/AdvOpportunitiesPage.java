@@ -6,10 +6,11 @@ public class AdvOpportunitiesPage  extends BasePage {
 	
 
 	
-	String sitepedia_url = propLoad().getProperty("SitepediaURL");
+	
 	String newSectionName= "NewSection"+String.valueOf(Math.round(Math.random()*1000));
 	String newPositionName="NewPosition"+String.valueOf(Math.round(Math.random()*1000));
 	String editedSectionName = newSectionName + "Edited";
+	String sitePage="/#/1?rnd=";
 	
 	
 	//Buttons
@@ -17,19 +18,19 @@ public class AdvOpportunitiesPage  extends BasePage {
 	By buttonSaveNewSection = By.xpath("//span[@ng-click='saveSection()']");
 	By buttonAddPosition = By.xpath("//span[@ng-click='showCreatePosition(section)']/i[1]");
 	By buttonSaveNewPosition = By.xpath("//span[@ng-click='savePosition()']");
-	By buttonDeleteSection = By.xpath("//span[(contains(text(), '"+newSectionName+"'))]/following-sibling::span[@title='Удалить секцию']/i");
+	By buttonDeleteSection = By.xpath("//span[(contains(text(), '"+editedSectionName+"'))]/following-sibling::span[@title='Удалить секцию']/i");
 	By buttonConfirmDeleteSection= By.xpath("//h3[contains(text(),'Удаление секции')]/following::span[@class='button tiny save' and contains(text(),'Хорошо')]");
 	By buttonDeletePosition = By.xpath("//span[(contains(text(), '"+newPositionName+"'))]/following-sibling::span[@title='Удалить позицию']/i");
 	By buttonConfirmDeletePosition = By.xpath("//h3[contains(text(),'Удаление позиции')]/following::span[@class='button tiny save' and contains(text(),'Хорошо')]");
 	By buttonEditPosition = By.xpath("//span[contains(text(),'"+newPositionName+"')]/preceding-sibling::span[@ng-click='showEditPosition(position,section)']");
 	By buttonEditSectionName = By.xpath("//span[contains(text(),'"+newSectionName+"')]/preceding-sibling::span[@ng-click='showEdit()']");
-	By buttonSaveEditedSectionName = By.xpath("//span[@ng-click='saveEdit()']");
+	By buttonSaveEditedSectionName = By.xpath("//span[(contains(text(),'"+editedSectionName+"'))]/following::span[@ng-click='saveEdit()'][1]");
 	
 	
 	//fields
 	By fieldSectionName = By.xpath("//input[@placeholder='Название раздела']");
 	By fieldPositionName = By.xpath("//input[@placeholder='Название позиции']");
-	By fieldEditSectionName=By.xpath("//input[@ng-model='fieldValue']");
+	By fieldEditSectionName=By.xpath("//span[(contains(text(),'"+newSectionName+"'))]/following::input[@ng-model='fieldValue'][1]");
 	
 	
 	
@@ -40,7 +41,8 @@ public class AdvOpportunitiesPage  extends BasePage {
 	
 	
 	//Events
-	String SitePageLoad = "//span[contains(text(),'Все страницы')]";
+	String sitePageLoadEvent = "//span[contains(text(),'Все страницы')]";
+//	String SavingEditedSectionName="//span['b-ico-mini edit'][1]";
 	
 	public AdvOpportunitiesPage(WebDriver driver)
 	{
@@ -50,18 +52,12 @@ public class AdvOpportunitiesPage  extends BasePage {
 	}
 	
 
-	void getSitePage()
-	{
-		 System.out.println("driver in getSitePage: "+getWebDriver());
-		 getWebDriver().get(sitepedia_url+"/#/1?rnd="+String.valueOf(Math.round(Math.random()*10000)));
-	}
+
 	
 	
 	public void loadSitePage()
 	{
-		getSitePage();
-		getWebDriver().navigate().refresh();
-		waitingOf(SitePageLoad, "xpath");
+		loadingSitePage(sitePage,sitePageLoadEvent, "xpath");
 	}
 	
 	
@@ -89,7 +85,7 @@ public class AdvOpportunitiesPage  extends BasePage {
 	
 	public void inputNewSectionName()
 	{
-		System.out.println(editedSectionName);
+		
 		inputTextToField(fieldEditSectionName, editedSectionName);
 	}
 	
@@ -107,6 +103,8 @@ public class AdvOpportunitiesPage  extends BasePage {
 	public void clickButtonSaveEditedSectionName()
 	{
 		clickElement(buttonSaveEditedSectionName);
+		sleep(500);
+		
 	}
 	
 	
@@ -139,19 +137,7 @@ public class AdvOpportunitiesPage  extends BasePage {
 	}
 	
 	
-	public boolean findSomeElement(By locator)
-	{
-		try {
-			getWebDriver().findElement(locator);
-			}
-			catch (NoSuchElementException e)
-			{
-				e.printStackTrace();
-				return false;
-			}
-			
-			return true;
-	}
+	
 	
 	
 	public boolean findNewSection()

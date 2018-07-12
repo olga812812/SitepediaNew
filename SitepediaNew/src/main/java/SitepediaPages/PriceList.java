@@ -5,10 +5,12 @@ import java.net.HttpURLConnection;
 import org.openqa.selenium.*;
 
 
-public class PriceList {
-	WebDriver driver;
-	Common common;
-	String sitepedia_url = common.propLoad().getProperty("SitepediaURL");
+public class PriceList extends BasePage {
+	
+	
+	String sitepedia_url = propLoad().getProperty("SitepediaURL");
+	String sitePage="/#/1?rnd=";
+	
 	//Extra charges
 	String extra_charge_number = String.valueOf(Math.round(Math.random()*10000));
 	String extra_charge_number_for_cancel = String.valueOf(Math.round(Math.random()*10000));
@@ -32,7 +34,7 @@ public class PriceList {
 	By buttonCancelOfAdditionOfExtraChargeForSeveralAdvertisers = By.xpath("//li[contains(text(),'Наценка за 2-х и более рекламодателей')]//span[@class='button tiny undo' and @title='Отменить']");
 	By buttonCancelComment = By.xpath("//li[contains(text(),'Комментарий к прайс-листу')]//span[@class='button tiny undo' and @title='Отменить']");
 	//Events
-	String PriceListPageLoad = "//span[contains(text(),'Все страницы')]";
+	String priceListPageLoadEvent = "//span[contains(text(),'Все страницы')]";
 	String ExtraChargeForDeferredPaymentSaving = "//span//b[contains(text(), '"+extra_charge_number+"')]";
 	String ExtraChargeForCancel = "//span//b[contains(text(), '"+extra_charge_number_for_cancel+"')]";
 	String ExtraChargeForSeveralAdvertisersSaving = "//span//b[contains(text(), '"+extra_charge_number_for_advertisers+"')]";
@@ -41,20 +43,24 @@ public class PriceList {
 	
 	public PriceList(WebDriver driver)
 	{
-		this.driver= driver;
-		common=new Common(driver);
+		super(driver);
+	}
+	
+	public void loadSitePage()
+	{
+		loadingSitePage(sitePage, priceListPageLoadEvent, "xpath");
 	}
 	
 	
 	public void clickElementOnPagePriceList(By elementOnPagePriceList)
 	{
-		driver.findElement(elementOnPagePriceList).click();
+		getWebDriver().findElement(elementOnPagePriceList).click();
 	}
 	
 	
 	public void inputTextToField(By fieldOnPagePriceList, String text)
 	{
-		WebElement field= driver.findElement(fieldOnPagePriceList);
+		WebElement field= getWebDriver().findElement(fieldOnPagePriceList);
 		field.clear();
 		field.sendKeys(text);
 	}
@@ -62,46 +68,41 @@ public class PriceList {
 		
 	public void waitingOf(String locator, String locator_type)
 	{
-		common.waitOfPresence(locator_type, locator);
+		waitOfPresence(locator_type, locator);
 	}
 	
 	public void waitingOfVisibilityOfLinkDownloadPriceListFile()
 	{
-		common.waitOfVisibilityOfElement("linktext", "Скачать таблицу в XLSX");
+		waitOfVisibilityOfElement("linktext", "Скачать таблицу в XLSX");
 	}
 	
 		
-	void getSitePage()
-	{
-		driver.get(sitepedia_url+"/#/1?rnd="+String.valueOf(Math.round(Math.random()*10000)));
-	}
-	
 	
 	public boolean checkPriceListTitles()
 	{
-		getSitePage();
-		driver.navigate().refresh();
+		getSitePage(sitePage);
+		getWebDriver().navigate().refresh();
 		clickElementOnPagePriceList(priceListTab);
 		try
 		{
-		driver.findElement(By.xpath("//th/div[contains(text(),'Название')]"));
-		driver.findElement(By.xpath("//th/div[contains(text(),'Сайт/Раздел/Формат')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Вид размещения')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Объем, показы')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'CPM, руб')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Прайс, руб')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Гео')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Соцдем')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Интересы')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Жанр')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Доход')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'За формат')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Платформа')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Поведение')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Подразделы')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Поиск')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Ползователи')]"));
-		driver.findElement(By.xpath("//th[contains(text(),'Комментарий')]"));
+			getWebDriver().findElement(By.xpath("//th/div[contains(text(),'Название')]"));
+			getWebDriver().findElement(By.xpath("//th/div[contains(text(),'Сайт/Раздел/Формат')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Вид размещения')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Объем, показы')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'CPM, руб')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Прайс, руб')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Гео')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Соцдем')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Интересы')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Жанр')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'Доход')]"));
+			getWebDriver().findElement(By.xpath("//th[contains(text(),'За формат')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Платформа')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Поведение')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Подразделы')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Поиск')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Ползователи')]"));
+		    getWebDriver().findElement(By.xpath("//th[contains(text(),'Комментарий')]"));
 				
 		}
 		catch (NoSuchElementException e)
@@ -115,9 +116,7 @@ public class PriceList {
 	public boolean addExtraChargeForDeferredPayment()
 	{
 		
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkExtraChargeForDeferredPayment);
@@ -135,9 +134,7 @@ public class PriceList {
 	
 	public boolean cancelOfAdditionOfExtraChargeForDeferredPayment()
 	{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkExtraChargeForDeferredPayment);
@@ -169,9 +166,7 @@ public class PriceList {
 		int resp_code=conn.getResponseCode();
 		if (resp_code==200){
 			//Check that link "Download price list" is active and clickable
-			getSitePage();
-			driver.navigate().refresh();
-			waitingOf(PriceListPageLoad, "xpath");
+			loadSitePage();
 			clickElementOnPagePriceList(priceListTab);
 			waitingOfVisibilityOfLinkDownloadPriceListFile();
 			clickElementOnPagePriceList(linkDownloadPriceListFile);		 
@@ -192,9 +187,7 @@ public class PriceList {
 	
 	public boolean addExtraChargeForAdvertisers()
 	{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkExtraChargeForSeveralAdvertisers);
@@ -214,9 +207,7 @@ public class PriceList {
 	
 	public boolean cancelOfAdditionOfExtraChargeForAdvertisers()
 	{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkExtraChargeForSeveralAdvertisers);
@@ -236,9 +227,7 @@ public class PriceList {
 
 	public boolean addComment()
 	{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkComment);
@@ -260,9 +249,7 @@ public class PriceList {
 	
 	public boolean cancelOfAdditionOfComment()
 	{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOf(PriceListPageLoad, "xpath");
+		loadSitePage();
 		clickElementOnPagePriceList(priceListTab);
 		clickElementOnPagePriceList(linkAdditionalInformationToPriceList);
 		clickElementOnPagePriceList(linkComment);
@@ -271,7 +258,7 @@ public class PriceList {
 		//
 		
 		try {
-			common.makeScreenshot(driver, "screenCancelComment");
+		    makeScreenshot(getWebDriver(), "screenCancelComment");
 			waitingOf(ExtraChargeForCancel, "xpath");
 		
 			}

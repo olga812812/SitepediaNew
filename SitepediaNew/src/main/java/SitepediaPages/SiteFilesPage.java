@@ -2,113 +2,122 @@ package main.java.SitepediaPages;
 
 import org.openqa.selenium.*;
 
-public class SiteFilesPage {
-	WebDriver driver;
-	Common common;
-	String linkName="newLink#"+String.valueOf(Math.round(Math.random()*10000));
+public class SiteFilesPage extends BasePage{
 	
+	String linkName="newLink#"+String.valueOf(Math.round(Math.random()*10000));
+	String fileDescription = "fileDescription"+String.valueOf(Math.round(Math.random()*10000));
+	String filePath = propLoad().getProperty("siteFilePath");
+	String sitePage="/#/1?rnd=";
+	
+	//Buttons
 	By buttonAddFileOrLink = By.xpath("//button");
+	By buttonSaveLink = By.xpath("//span[contains(text(),'Сохранить') and @ng-click='saveFile()']");
+	
 	By tabFiles = By.xpath("//li[contains(text(),'Файлы')]");
 	By selectAttachementType = By.xpath("//b[@role='presentation']");
+	
 	By selectLink = By.xpath("//div[contains(text(),'Ссылка')]");
-	By inputLinkName = By.xpath("//input[@placeholder='Название']");
-	By inputLinkURL = By.xpath("//input[@placeholder='Введите URL ссылки']");
-	By buttonSaveLink = By.xpath("//span[contains(text(),'Сохранить') and @ng-click='saveFile()']");
+	By selectFile = By.xpath("//div[contains(text(),'Файл')]");
+	
 	By newLink = By.xpath("//td[contains(text(),'"+linkName+"')]");
+	By newFile = By.xpath("//td[contains(text(),'"+fileDescription+"')]");
+	
+	//Fields
+	By fieldLinkName = By.xpath("//input[@placeholder='Название']");
+	By fieldLinkURL = By.xpath("//input[@placeholder='Введите URL ссылки']");
+	By fieldFileDescription = By.xpath("//textarea[@placeholder='Описание']");
+	By fieldFilePath = By.xpath("//input[@placeholder='Выберите файл']");
+	
+	//Events
+		String sitePageLoadEvent = "//span[contains(text(),'Все страницы')]";
+		String sitePageFilesTabLoad = "//tr/th[contains(text(),'Название')]";
+		String addNewFileOrLinkWindowLoad = "//label[contains(text(),'Тип')]";
 	
 	
 	
 	public SiteFilesPage (WebDriver driver)
 	{
-		this.driver=driver;
-		common=new Common(driver);
-		
+		super(driver);
 	}
 	
-	void getSitePage()
+	
+	
+	public void loadSitePage()
 	{
-		driver.get("http://92.242.32.232:8133/#/1?rnd="+String.valueOf(Math.round(Math.random()*10000)));
+		loadingSitePage(sitePage, sitePageLoadEvent, "xpath");
 	}
 	
-	void waitingOfSitePageLoad()
-	{
-		common.waitOfPresence("xpath", "//span[contains(text(),'Все страницы')]");
-	}
 	
-	void waitingOfTabFilesLoad()
-	{
-		common.waitOfPresence("xpath", "//tr/th[contains(text(),'Название')]");
-	}
 
-	void waitingOfNewTabLoad()
+	public void clickTabFiles()
 	{
-		common.waitOfPresence("xpath", "//label[contains(text(),'Тип')]");
-	}
-	void clickTabFiles()
-	{
-		driver.findElement(tabFiles).click();
+		clickElement(tabFiles);
+		waitOfPresence("xpath", sitePageFilesTabLoad);
 	}
 	
-	void clickButtonAddFileOrLink()
+	public void clickButtonAddFileOrLink()
 	{
-	driver.findElement(buttonAddFileOrLink).click();	
+		clickElement(buttonAddFileOrLink);	
+		waitOfPresence("xpath", addNewFileOrLinkWindowLoad);
 	}
 	
-	void clickListOfAttachmentType()
+	public void clickListOfAttachmentType()
 	{
-		common.waitAndClick(driver.findElement(selectAttachementType));
+		waitAndClick(selectAttachementType);
 	}
 	
-	void clickLink()
+	public void clickLink()
 	{
-		common.waitAndClick(driver.findElement(selectLink));
+		waitAndClick(selectLink);
 	}
 	
-	void enterLinkName()
+	public void clickFile()
 	{
-		driver.findElement(inputLinkName).sendKeys(linkName);
+		waitAndClick(selectFile);
 	}
 	
-	void enterLinkUrl()
+	public void enterLinkName()
 	{
-		driver.findElement(inputLinkURL).sendKeys("http://linl/number/"+String.valueOf(Math.round(Math.random()*10000)));
+		inputTextToField(fieldLinkName, linkName);
 	}
 	
-	void clickButtonSaveLink()
+	public void enterFilePath()
 	{
-		driver.findElement(buttonSaveLink).click();	
+		inputTextToField(fieldFilePath, filePath);
 	}
 	
-	void findNewLink()
+	public void enterFileDescription()
 	{
-		driver.findElement(newLink);
+		inputTextToField(fieldFileDescription, fileDescription);
 	}
 	
-	public boolean addLink()
+	public void enterLinkUrl()
 	{
-		boolean result;
-		try{
-		getSitePage();
-		driver.navigate().refresh();
-		waitingOfSitePageLoad();
-		clickTabFiles();
-		waitingOfTabFilesLoad();
-		clickButtonAddFileOrLink();	
-		waitingOfNewTabLoad();
-		clickListOfAttachmentType();
-		clickLink();
-		enterLinkName();
-		enterLinkUrl();
+		inputTextToField(fieldLinkURL,"http://link/number/"+String.valueOf(Math.round(Math.random()*10000)));
+	}
+	
+	public void clickButtonSaveLink()
+	{
+		clickElement(buttonSaveLink);	
+		waitOfPresence("xpath", sitePageFilesTabLoad);
+	}
+	
+	public void clickButtonSaveFile()
+	{
 		clickButtonSaveLink();
-		waitingOfTabFilesLoad();
-		findNewLink();
-		}
-		catch(Exception ex)
-		{
-			ex.printStackTrace();
-			return false;
-		}
-		
-		return true;
 	}
+	
+	public boolean findNewLink()
+	{
+		return	findSomeElement(newLink);
+	
+	}
+	
+	public boolean findNewFile()
+	{
+		return	findSomeElement(newFile);
+	
+	}
+	
+
 }

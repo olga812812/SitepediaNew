@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ public class BasePage extends Common{
 	
 	
 	private WebDriver driver;
+	String sitepedia_url = propLoad().getProperty("SitepediaURL");
 
 	@Override
 	public WebDriver getWebDriver() {
@@ -26,6 +28,19 @@ public class BasePage extends Common{
 	{
 		this.driver = driver;
 		
+	}
+	
+	public void getSitePage(String sitePage)
+	{
+		 
+		 getWebDriver().get(sitepedia_url+sitePage+String.valueOf(Math.round(Math.random()*10000)));
+		 getWebDriver().navigate().refresh();
+	}
+	
+	public void loadingSitePage(String sitePage, String sitePageLoadEvent, String locator_type)
+	{
+		getSitePage(sitePage);
+		waitingOf(sitePageLoadEvent, locator_type);
 	}
 	
 	public void makeScreenshot(WebDriver driver, String filename)
@@ -54,21 +69,21 @@ public class BasePage extends Common{
 			field.sendKeys(text);
 		}
 	 
-	 public static void waitAndClick(WebElement element)
+	 public  void waitAndClick(By elementLocator)
 		{
 			
 			for (int i=0; i<=40; i++)
 			{
 				try {
-					System.out.println("i am here " + i + " times" + element );
-					element.click();
+					System.out.println("i am here " + i + " times" + elementLocator );
+					getWebDriver().findElement(elementLocator).click();
 				     return; 
 				    }
 				
 				catch (org.openqa.selenium.WebDriverException e)
 				{
 					
-					System.out.println("Catch no clikable exception" + i + element + "times" );
+					System.out.println("Catch no clikable exception" + i + elementLocator + "times" );
 					e.printStackTrace();
 				}
 				
@@ -110,6 +125,20 @@ public class BasePage extends Common{
 		    break;
 			}
 			
+		}
+		
+		public boolean findSomeElement(By locator)
+		{
+			try {
+				getWebDriver().findElement(locator);
+				}
+				catch (NoSuchElementException e)
+				{
+					e.printStackTrace();
+					return false;
+				}
+				
+				return true;
 		}
 	
 
