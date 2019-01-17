@@ -1,8 +1,6 @@
 package tests.java.SitepediaTests;
 
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -50,14 +48,14 @@ public static  WebDriver initDriver (String browser)
 	System.out.println("here: "+browser);
 	if(browser.equalsIgnoreCase("firefox")) {
 		 
-		
-		 FirefoxDriverManager.getInstance().setup(); 
+		WebDriverManager.firefoxdriver().setup();		
 		 driver = new FirefoxDriver();
 	  
 	  }else if (browser.equalsIgnoreCase("ie")) { 
 	 
 		  
-		  InternetExplorerDriverManager.getInstance().setup(); 
+		  WebDriverManager.iedriver().setup();
+		  //InternetExplorerDriverManager.getInstance().setup(); 
 		 
 		  DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
 		  ieCapabilities.setCapability("requireWindowFocus", true);
@@ -69,7 +67,7 @@ true);
 	  } else if (browser.equalsIgnoreCase("chrome"))
 	  {
 		
-		ChromeDriverManager.getInstance().setup();
+		 WebDriverManager.chromedriver().setup();
 	    driver = new ChromeDriver();
 	  }
 	
