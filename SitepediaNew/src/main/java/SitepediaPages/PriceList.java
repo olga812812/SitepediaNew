@@ -48,7 +48,7 @@ public class PriceList extends BasePage {
 	
 	public void loadSitePage()
 	{
-		loadingSitePage(sitePage, priceListPageLoadEvent, "xpath");
+		loadingPage(sitePage, priceListPageLoadEvent, "xpath");
 	}
 	
 	

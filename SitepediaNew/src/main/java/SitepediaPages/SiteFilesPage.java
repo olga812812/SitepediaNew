@@ -44,7 +44,7 @@ public class SiteFilesPage extends BasePage{
 	
 	public void loadSitePage()
 	{
-		loadingSitePage(sitePage, sitePageLoadEvent, "xpath");
+		loadingPage(sitePage, sitePageLoadEvent, "xpath");
 	}
 	
 	

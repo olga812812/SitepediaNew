@@ -51,13 +51,10 @@ public class AdvOpportunitiesPage  extends BasePage {
 		
 	}
 	
-
-
-	
 	
 	public void loadSitePage()
 	{
-		loadingSitePage(sitePage,sitePageLoadEvent, "xpath");
+		loadingPage(sitePage,sitePageLoadEvent, "xpath");
 	}
 	
 	

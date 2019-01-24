@@ -10,7 +10,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import main.java.SitepediaPages.Common;
 
@@ -22,7 +24,7 @@ public class BaseTest extends Common{
 	
 
 	
-@BeforeClass
+@BeforeSuite
 		 
 	   public void init()
 		{
@@ -30,7 +32,7 @@ public class BaseTest extends Common{
 		    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		 }
 	
-@AfterClass
+@AfterSuite
 	    public void close()
 	     {
 	       driver.quit();

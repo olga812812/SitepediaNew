@@ -38,7 +38,7 @@ public class AddSitePage extends BasePage {
 	
 	public void loadAddSitePage()
 	{
-		loadingSitePage(sitePage, addSitePageLoadEvent, "xpath");
+		loadingPage(sitePage, addSitePageLoadEvent, "xpath");
 	}
 	
 	public void clickButtonAddSite()
@@ -82,7 +82,7 @@ public class AddSitePage extends BasePage {
 	
 	public boolean findNewSite()
 	{
-		loadingSitePage(sitePage, addSitePageLoadEvent, "xpath");
+		loadingPage(sitePage, addSitePageLoadEvent, "xpath");
 		return	findSomeElement(newSite);
 	
 	}

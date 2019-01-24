@@ -30,21 +30,45 @@ public class BasePage extends Common{
 		
 	}
 	
+		
+	public void loadingPage(String Page, String PageLoadEvent, String locator_type)
+	{
+		getSitePage(Page);
+		waitingOf(PageLoadEvent, locator_type);
+	}
+	
+	
 	public void getSitePage(String sitePage)
 	{
 		 
 		 getWebDriver().get(sitepedia_url+sitePage+String.valueOf(Math.round(Math.random()*10000)));
 		 getWebDriver().navigate().refresh();
 	}
-	
-	public void loadingSitePage(String sitePage, String sitePageLoadEvent, String locator_type)
+
+	public void waitingOf(String locator, String locator_type)
 	{
-		getSitePage(sitePage);
-		waitingOf(sitePageLoadEvent, locator_type);
+		waitOfPresence(locator_type, locator);
 	}
 	
-	public void makeScreenshot(WebDriver driver, String filename)
-	{
+	public void waitOfPresence(String type, String path)
+		{
+			System.out.println("I am in waitOfPersense");
+			 System.out.println("driver in waifOfPresence: "+getWebDriver());
+			WebDriverWait waitG = new WebDriverWait(getWebDriver(), 10);
+			System.out.println("Type is: "+type+"Path is: "+path);
+			switch (type.toLowerCase()) {
+			case "xpath":
+			System.out.println(path);
+			waitG.until(ExpectedConditions.presenceOfElementLocated(By.xpath(path)));
+			break;
+			case "linktext":
+		    waitG.until(ExpectedConditions.presenceOfElementLocated(By.linkText(path)));
+		    break;
+			}
+			
+		}
+	
+	public void makeScreenshot(WebDriver driver, String filename){
 		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
         FileUtils.copyFile(screenshotFile, new File(filename+".png"));
@@ -52,25 +76,19 @@ public class BasePage extends Common{
 		catch (Exception ex) {ex.printStackTrace();}
 	}
 
-	 public void clickElement(By elementOnPage)
-	  {
+	 public void clickElement(By elementOnPage){
 		 getWebDriver().findElement(elementOnPage).click();
 	  }
 	 
-	 public void waitingOf(String locator, String locator_type)
-		{
-			waitOfPresence(locator_type, locator);
-		}
+	 
 		
-	 public void inputTextToField(By fieldNameOnPage, String text)
-		{
+	 public void inputTextToField(By fieldNameOnPage, String text){
 			WebElement field= getWebDriver().findElement(fieldNameOnPage);
 			field.clear();
 			field.sendKeys(text);
 		}
 	 
-	 public  void waitAndClick(By elementLocator)
-		{
+	 public  void waitAndClick(By elementLocator){
 			
 			for (int i=0; i<=40; i++)
 			{
@@ -95,26 +113,9 @@ public class BasePage extends Common{
 			}
 			
 		}
-	 public void waitOfPresence(String type, String path)
-		{
-			System.out.println("I am in waitOfPersense");
-			 System.out.println("driver in waifOfPresence: "+getWebDriver());
-			WebDriverWait waitG = new WebDriverWait(getWebDriver(), 10);
-			System.out.println("Type is: "+type+"Path is: "+path);
-			switch (type.toLowerCase()) {
-			case "xpath":
-			System.out.println(path);
-			waitG.until(ExpectedConditions.presenceOfElementLocated(By.xpath(path)));
-			break;
-			case "linktext":
-		    waitG.until(ExpectedConditions.presenceOfElementLocated(By.linkText(path)));
-		    break;
-			}
-			
-		}
+	
 		
-		public void waitOfVisibilityOfElement(String type, String path)
-		{
+		public void waitOfVisibilityOfElement(String type, String path) {
 			WebDriverWait waitG = new WebDriverWait(getWebDriver(), 10);
 			switch (type.toLowerCase()) {
 			case "xpath":
@@ -127,8 +128,7 @@ public class BasePage extends Common{
 			
 		}
 		
-		public boolean findSomeElement(By locator)
-		{
+		public boolean findSomeElement(By locator) {
 			try {
 				getWebDriver().findElement(locator);
 				}

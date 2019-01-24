@@ -14,14 +14,9 @@ import org.testng.Assert;
 
 public class AdvOpportunitiesTests extends BaseTest {
 	
-	
-
-
 	AdvOpportunitiesPage pageAO = new AdvOpportunitiesPage(driver);
 
-	
-
-	
+		
 	@Test (description="Check addition of section")
 	public void advOpportunities_checkAddSection()
 	{
