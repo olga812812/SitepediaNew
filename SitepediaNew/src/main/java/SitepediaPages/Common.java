@@ -25,8 +25,7 @@ public abstract class Common {
 	{
 		pageLogin = new LoginPage(driver);
 	    stp_cookie = pageLogin.login();
-	    pageLogin.setCookies(stp_cookie);
-	    
+	    pageLogin.setCookies(stp_cookie);	   	    
 	    return stp_cookie;
 	    
 	}
@@ -51,6 +50,7 @@ public abstract class Common {
 	public static HttpURLConnection makeHttpReq(String url_string, String cookie)
 	{
 		try{
+			System.out.println ("Cookie are in http request  "+cookie);
 			String[] ar = cookie.split(";");    
 			URL url = new URL(url_string);
 			    HttpURLConnection conn = (HttpURLConnection) url.openConnection();

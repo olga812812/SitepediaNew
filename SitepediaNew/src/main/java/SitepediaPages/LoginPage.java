@@ -32,12 +32,12 @@ public class LoginPage extends BasePage {
 		Set<Cookie> allCookies = getWebDriver().manage().getCookies();
 		for (Cookie loadedCookie : allCookies) {
 		    String key = loadedCookie.getName();
-		    String value = loadedCookie.getValue();
+		    String value = loadedCookie.getValue();		    
 		      if (key.equals("sitepedia.sid"))
 		    {
 		    	String site_key = key;
 		    	String site_value = value;
-		    			    	return site_key+";"+site_value;
+		       return site_key+";"+site_value;
 		    }
 		}
 		return "null";

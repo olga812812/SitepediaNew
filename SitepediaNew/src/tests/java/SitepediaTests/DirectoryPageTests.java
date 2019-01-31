@@ -6,28 +6,90 @@ import org.testng.annotations.*;
 import main.java.SitepediaPages.DirectoryPage;
 
 public class DirectoryPageTests extends BaseTest {
-	DirectoryPage page = new DirectoryPage(driver);
-	String pageURL = "/#/administration/catalogs/socdem?rnd=";
+	String directoryPage;
+	DirectoryPage page;
+	
+	@Factory(dataProvider = "dataMethod")
+    public DirectoryPageTests(String url) {
+        this.directoryPage = url;
+        page = new DirectoryPage(driver, directoryPage);
+    }
+ 
+    @DataProvider
+    public static Object [][] dataMethod() {
+    	return new Object[][] {
+				//test Frequency Directory
+				{"/#/administration/catalogs/freqperiod?rnd="},
+				//test Platforms Directory
+                {"/#/administration/catalogs/platform?rnd="},
+                //test SocDem Directory
+                {"/#/administration/catalogs/socdem?rnd="}
+            };
+    }
 	
 	
-	@Test (description="Checking addition of directory item")
+	
+	@Test (dependsOnMethods={"checkCancelOfCreationNewDirectoryItem"}, description="Checking addition of directory item")
 	public void checkAddDirectoryItem() {		
-		page.loadPage(pageURL);
+		page.loadPage();
 		page.clickButtonAddDirectoryItem();
 		page.enterDirectoryItemName();
 		page.clickButtonSaveDirectoryItem();
-		page.loadPage(pageURL);
+		page.loadPage();
 		Assert.assertTrue(page.findNewDirectoryItem());	
 	}
 	
-	@Test (dependsOnMethods={"checkAddDirectoryItem"},description="Checking editing of directory item")
+	@Test (description="Checking cancellation of creation new directory item")
+	public void checkCancelOfCreationNewDirectoryItem() {
+		page.loadPage();
+		page.clickButtonAddDirectoryItem();
+		page.enterDirectoryItemName();
+		page.clickButtonCancelCreatingNewDirectoryItem();
+		page.loadPage();
+		Assert.assertFalse(page.findNewDirectoryItem());
+	}
+	
+	@Test (dependsOnMethods={"checkCancelOfEditDirectoryItem"},description="Checking editing of directory item")
 	public void checkEditDirectoryItemName() {
-		page.loadPage(pageURL);
+		page.loadPage();
 		page.clickButtonEditDirectoryItem();
 		page.enterNewDirectoryItemName();
-		page.clickButtonSaveNewDirectoryItem();
-		page.loadPage(pageURL);
+		page.clickButtonSaveEditedDirectoryItem();
+		page.loadPage();
 		Assert.assertTrue(page.findEditedDirectoryItem());	
+		
+	}
+	
+	@Test (description="Checking deletion of Directory Item")
+	public void checkDeleteDirectoryItem() {
+		page.loadPage();
+		page.clickButtonAddDirectoryItem();
+		page.enterDirectoryItemForDeletionName();
+		page.clickButtonSaveDirectoryItem();
+		page.loadPage();
+		page.clickButtonDeleteDirectoryItem();
+		page.clickButtorConfirmDeletionOfDirectoryItem();
+		page.loadPage();
+		Assert.assertFalse(page.findDEletedDirectoryItem());
+		
+	}
+	
+	@Test (dependsOnMethods={"checkAddDirectoryItem"}, description="Checking cancel editing of directory item")
+	public void checkCancelOfEditDirectoryItem() {
+		page.loadPage();
+		page.clickButtonEditDirectoryItem();
+		page.enterNewDirectoryItemName();
+		page.clickButtonCancelChangingDirectoryItemName();
+		page.loadPage();
+		Assert.assertFalse(page.findEditedDirectoryItem());	
+		
+	}
+	
+	@Test (dependsOnMethods={"checkAddDirectoryItem"}, description="Checking finding directory item")
+	public void checkFindDirectoryItem() {
+		page.loadPage();
+		page.enterDirectoryItemNameInSearchField();
+		Assert.assertEquals(1, page.numberOfDirectoryItemsOnPage());
 		
 	}
 }

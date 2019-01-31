@@ -1,6 +1,7 @@
 package main.java.SitepediaPages;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
@@ -139,6 +140,12 @@ public class BasePage extends Common{
 				}
 				
 				return true;
+		}
+		
+		public List<WebElement> findAllElements(By locator) {
+			
+			return getWebDriver().findElements(locator);
+			
 		}
 	
 

@@ -20,7 +20,7 @@ public class BaseTest extends Common{
 	
 	
 	static WebDriver driver = initDriver(propLoad().getProperty("browser"));
-	String stp_cookie;
+    String stp_cookie;
 	
 
 	
@@ -28,7 +28,7 @@ public class BaseTest extends Common{
 		 
 	   public void init()
 		{
-		    stp_cookie=login(driver);
+		    stp_cookie=login(driver);			    
 		    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		 }
 	
